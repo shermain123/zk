@@ -1,0 +1,55 @@
+@charset "utf-8";
+body {font-family: "Helvetica Neue", Helvetica, Microsoft Yahei, Hiragino Sans GB, WenQuanYi Micro Hei, sans-serif;
+    background:#fff; line-height:14px;color:#333;padding:0;margin:0;position:relative;}
+
+.clear{clear:both;height:1px;}
+
+#userCode, #userPassword, #password-text {
+    font-size: 14px;
+    color: #777;
+}
+
+/*结构*/
+.container-top{height: 80px;min-width: 1200px;}
+.container-main{margin: 10px auto 60px;min-width: 1200px;}
+.container-main{
+    background-image: url(../../images/frame/index_bg_img.png);
+    background-repeat: repeat-x;
+	padding: 40px 0;
+}
+
+.container-main .container-main-warp{height: 460px;font-size:12px; position:relative;margin:0 auto;width:1200px;}
+.container-main-picture{float: left;}
+
+.container-foot{background:#4b4b4b;min-width: 1200px;}
+.container-foot .container-foot-warp{margin:0 auto;width:900px;padding:20px;color:#fff;}
+
+/*主菜单*/
+.container-top-menu{background:#fff;border-top: 20px solid #4183d3;}
+.container-top-menu .content{margin:0 auto;height:55px;width: 1200px;; position:relative;}
+.container-top-menu .content .logo{float:left;width:200px;padding-top: 12px;}
+.container-top-menu .content .logo span{display:block;width:200px;height:40px;background:url(../../images/frame/logo.PNG) no-repeat;}
+
+.container-top-menu .content .welcome-tip{ position:absolute;top: 27px;left:210px;font-size:16px;line-height:18px;color:#506aa5;font-weight: bolder;}
+
+/*登陆*/
+.container-main .container-main-warp .login-warp{ position:absolute;top:80px;left:790px;padding:38px 0 0px 20px;height:230px;width:210px;}
+
+/*版权*/
+.container-foot .container-foot-warp .copyright{ text-align:center;padding-top:10px;font-size:14px;line-height:20px;color:#ededed;}
+.container-foot .container-foot-warp .browser-version{ text-align:center;line-height:20px;font-size:12px;margin:0 auto;}
+.container-foot .container-foot-warp .browser-version em{ font-style:normal;color:#f39836;}
+.container-foot .container-foot-warp .browser-version em a{color:#f39836;}
+.container-foot .container-foot-warp .contact-tel{margin:0 auto;width:560px;}
+.container-foot .container-foot-warp .contact-tel dl{float:left; list-style-type:none;padding:0;margin:0;font-size:12px;padding-right:10px;}
+.container-foot .container-foot-warp .contact-tel dl dt{padding-top:8px;width:50px;float:left;line-height:18px;}
+.container-foot .container-foot-warp .contact-tel dl dd{margin-left:55px;line-height:18px;}
+.container-foot .container-foot-warp .contact-tel dl dd .tel-name{float:left;width:45px;}
+.container-foot .container-foot-warp .tel-department{float:left;width:80px;}
+
+.login{ height:225px;width:280px;padding: 40px 30px;background-color:#20416A;border-radius: 4px;position:absolute;left: 40%;top: 45%; margin:-150px 0 0 -150px;z-index:99;}
+.login h1{ text-align:center; color:#fff; font-size:18px; margin-bottom:20px;font-family: "微软雅黑", Verdana, Arial, sans-serif }
+.login_btn{ width:100%; }
+.login .layui-form-item{margin-bottom: 20px;;}
+.login .layui-form-item .layui-input{height: 40px;line-height: 40px;}
+#ajaxMsg{display:none;background-color: #f1e7b2; width: 200px; margin-top:20px; padding:5px 0; color:Red;padding-left: 10px;}

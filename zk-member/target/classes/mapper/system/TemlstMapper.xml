@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.member.mapper.system.TemlstMapper">
+
+	<resultMap id="temMap" type="Temlst">
+		<id property="id" column="ID" />
+		<result property="nLevel" column="nlevel" />
+		<result property="sCort" column="sCort" />
+	</resultMap>
+	
+	<delete id="delete" parameterType="string">
+		delete from cp_sys_temlst
+	</delete>
+	
+</mapper> 

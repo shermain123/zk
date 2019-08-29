@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.member.mapper.system.RoleResMapper">
+
+	<resultMap id="roleResMap" type="RoleRes">
+		<id property="id" column="id" />
+		<result property="resId" column="res_id" />
+		<result property="roleId" column="role_id" />
+	</resultMap>
+	
+	<select id="searchRoleRes" parameterType="map" resultMap="roleResMap">
+		select * from cp_sys_roleres where 1=1
+		<if test="roleId != null and roleId != ''">
+			and role_id = #{roleId}
+		</if>
+		<if test="resId != null and resId != ''">
+			and res_id = #{resId}
+		</if>
+	</select>
+
+	<insert id="insert" parameterType="RoleRes">
+	    <![CDATA[
+		insert into cp_sys_roleres
+		(id,role_id,res_id) values
+		(#{id,jdbcType=VARCHAR},#{roleId,jdbcType=VARCHAR},#{resId,jdbcType=VARCHAR})
+		]]>
+	</insert>
+
+	<insert id="insertBatch" parameterType="java.util.List">
+		insert into cp_sys_roleres(id,role_id,res_id) 
+		<foreach collection="list" item="item" index="index" separator="union all"> 
+         	select #{item.id,jdbcType=VARCHAR},#{item.roleId,jdbcType=VARCHAR},#{item.resId,jdbcType=VARCHAR} from dual
+		</foreach>
+	</insert>
+
+	<delete id="deleteRoleResByMap" parameterType="map">
+		delete from cp_sys_roleres 
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="roleId != null and roleId != ''">
+				and role_id = #{roleId}
+			</if>
+			<if test="resId != null and resId != ''">
+				and res_id = #{resId}
+			</if>
+		</trim>
+	</delete>
+
+</mapper> 

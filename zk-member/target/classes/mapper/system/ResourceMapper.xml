@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.member.mapper.system.ResourceMapper">
+
+	<resultMap id="resMap" type="Res">
+		<id property="resId" column="RES_ID" />
+		<result property="resName" column="RES_NAME" />
+		<result property="resType" column="RES_TYPE" />
+		<result property="url" column="URL" />
+		<result property="resLogo" column="RES_LOGO" />
+		<result property="parentId" column="PARENT_ID" />
+		<result property="resOrder" column="RES_ORDER"/>
+		<result property="resLevel" column="RES_LEVEL"/>
+		<result property="updateId" column="UPDATE_ID" />
+		<result property="updateTime" column="UPDATE_TIME" />
+		<result property="flag" column="FLAG"/>
+		<result property="isSys" column="IS_SYS"/>
+	</resultMap>
+
+	<select id="searchAllResource" parameterType="map" resultMap="resMap">
+		SELECT A.* FROM cp_sys_resource A,cp_sys_temlst B
+		WHERE
+			A.RES_ID = B.ID
+			and flag = '1'
+		ORDER BY
+			B.sCort;
+	</select> 
+	
+	<!-- 查询按钮权限 -->
+	<select id="searchResource" parameterType="map" resultMap="resMap">
+ 		select distinct c.* from (
+			SELECT A.* FROM cp_sys_resource A,cp_sys_temlst B
+					WHERE
+						A.RES_ID = B.ID
+						and flag = '1'
+					ORDER BY
+						B.sCort
+		) c join (select DISTINCT res_id from cp_sys_roleres ) d on c.res_id = d.res_id 
+		
+		where c.res_level = #{resLevel}
+		<if test="parentId != null and parentId != ''">
+			and parent_id = #{parentId}
+		</if>
+		order by c.RES_ORDER
+	</select> 
+	
+	<insert id="insert" parameterType="Res" >
+		insert into cp_sys_resource(
+			RES_ID,
+			RES_NAME,
+			RES_TYPE,
+			URL,
+			RES_LOGO,
+			PARENT_ID,
+			RES_ORDER,
+			RES_LEVEL,
+			UPDATE_ID,
+			UPDATE_TIME,
+			FLAG,
+			IS_SYS
+		)VALUES(
+			#{resId,jdbcType=INTEGER},
+			#{resName,jdbcType=VARCHAR},
+			#{resType,jdbcType=INTEGER},
+			#{url,jdbcType=VARCHAR},
+			#{resLogo,jdbcType=VARCHAR},
+			#{parentId,jdbcType=VARCHAR},
+			#{resOrder,jdbcType=INTEGER},
+			#{resLevel,jdbcType=INTEGER},
+			#{updateId,jdbcType=VARCHAR},
+			sysdate(),
+			1,
+			0
+		)
+	</insert>
+	
+	<update id="update" parameterType="Res">
+		update CP_SYS_RESOURCE
+		<trim prefix="set" suffixOverrides=",">
+			<if test="resName != null and resName != ''">
+				RES_NAME = #{resName},
+			</if>
+			<if test="resType != null and resType != ''">
+				RES_TYPE = #{resType},
+			</if>
+			<if test="resLogo != null and resLogo != ''">
+				RES_LOGO = #{resLogo},
+			</if>
+			<if test="resOrder != null and resOrder != ''">
+				RES_ORDER = #{resOrder},
+			</if>
+			<if test="updateId != null and updateId != ''">
+				UPDATE_ID = #{updateId},
+			</if>
+			UPDATE_ID = sysdate()
+		</trim>
+		where RES_ID = #{resId}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from cp_sys_resource where RES_ID = #{resId}
+	</delete>
+	
+	<!-- 调用存储过程 序列化资源等级排序 -->
+	<select id="callResource" parameterType="int" statementType="CALLABLE">
+		<![CDATA[
+		{call showTreeNodes_yongyupost2000(#{id,mode=IN,jdbcType=INTEGER})}
+		]]>
+	</select>
+	
+	<select id="getMaxId" parameterType="map" resultType="int">
+		select max(res_id) from cp_sys_resource
+	</select>
+</mapper> 

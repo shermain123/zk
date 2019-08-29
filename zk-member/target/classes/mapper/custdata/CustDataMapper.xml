@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.member.mapper.custdata.CustDataMapper">
+	<resultMap id="custDataMap" type="CustData">
+		<id property="id" column="id" />
+		<result property="parentId" column="parent_id" />
+		<result property="name" column="name" />
+		<result property="isMust" column="is_must" />
+		<result property="orderNum" column="order_num" />
+	</resultMap>
+	<select id="getCustList" resultMap="custDataMap">
+		select * from tb_cust_data where parent_id BETWEEN 0 and 1
+	</select>
+	
+	<select id="getAttList" parameterType="string" resultMap="custDataMap">
+		select * from tb_cust_data where parent_id = #{id}
+	</select>
+</mapper> 

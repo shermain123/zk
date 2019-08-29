@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.member.mapper.customer.CustomerMapper">
+	<resultMap id="customerMap" type="Customer">
+		<id property="cusid" column="cusid" />
+		<result property="cusname" column="cusname" />
+		<result property="phone" column="phone" />
+		<result property="address" column="address" />
+		<result property="brithday" column="brithday" />
+		<result property="email" column="email" />
+		<result property="destric" column="destric" />
+		<result property="updateTime" column="updatetime" />
+		<result property="lastTime" column="lasttime" />
+	</resultMap>
+	
+	<select id="queryCusid" resultMap="customerMap" parameterType="string">
+		select cusid,cusname,phone,address,brithday,email,destric from sp_customer
+		where cusid = #{cusid}
+	</select>
+	
+	<select id="queryAll"  resultMap="customerMap">
+		select cusid,cusname,phone,address,brithday,email,destric from sp_customer
+	</select>
+	
+	<insert id="insert" parameterType="customer" >
+		insert into sp_customer (cusid, cusname, phone, 
+	      address, brithday, email, 
+	      destric, updatetime, lasttime
+	      )
+	    values (#{cusid,jdbcType=VARCHAR}, #{cusname,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+	      #{address,jdbcType=VARCHAR}, #{brithday,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+	      #{destric,jdbcType=VARCHAR}, sysdate(), sysdate()
+	      )
+	</insert>
+	
+	<update id="update" parameterType="customer">
+		 update sp_customer
+	    set cusname = #{cusname,jdbcType=VARCHAR},
+	      phone = #{phone,jdbcType=VARCHAR},
+	      address = #{address,jdbcType=VARCHAR},
+	      brithday = #{brithday,jdbcType=VARCHAR},
+	      email = #{email,jdbcType=VARCHAR},
+	      destric = #{destric,jdbcType=VARCHAR},
+	      updatetime = sysdate()
+	    where cusid = #{cusid,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="delByCusid" parameterType="string">
+		delete from sp_customer where cusid = #{cusid}
+	</delete>
+</mapper> 

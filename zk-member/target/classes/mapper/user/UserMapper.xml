@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.member.mapper.user.UserMapper">
+
+	<resultMap id="userMap" type="User">
+		<id property="id" column="id" />
+		<result property="userCode" column="user_code" />
+		<result property="passWord" column="pass_word" />
+		<result property="userName" column="user_name" />
+		<result property="isSys" column="is_sys" />
+		<result property="deptId" column="dept_id" />
+		<result property="updateTime" column="update_time"/>
+		<result property="roleName" column="role_name"/>
+	</resultMap>
+
+	<select id="searchAllUser" resultMap="userMap">
+		select * from cp_sys_user
+	</select>
+
+	<select id="list" parameterType="map" resultMap="userMap">
+		
+		select u.id,
+		       u.user_code,
+		       u.user_name,
+		       u.pass_word,
+		       u.is_sys,
+		       u.dept_id,
+		       u.update_time,
+		       r.role_name
+		  from cp_sys_user u
+		  left join cp_sys_userrole ur
+		    on u.id = ur.user_id
+		  left join cp_sys_role r
+		    on ur.role_id = r.id
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="userName != null and userName != ''">
+				u.user_name like '%'||#{userName}||'%'
+			</if>
+			<if test="userCode != null and userCode != ''">
+				and u.user_code like '%'||#{userCode}||'%'
+			</if>
+			<if test="deptId != null and deptId != ''">
+				and u.dept_id = #{deptId}
+			</if>
+		</trim>	 
+		<if test="orderby != null and orderby != ''">
+		<![CDATA[
+		     order by ${orderby} ${order}
+		 ]]>
+		</if>
+		limit #{start},#{end}
+		
+		
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		select count(u.id) from cp_sys_user u
+			  left join cp_sys_userrole ur
+			    on u.id = ur.user_id
+			  left join cp_sys_role r
+			    on ur.role_id = r.id
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="userName != null and userName != ''">
+				u.user_name like '%'||#{userName}||'%'
+			</if>
+			<if test="userCode != null and userCode != ''">
+				and u.user_code like '%'||#{userCode}||'%'
+			</if>
+			<if test="deptId != null and deptId != ''">
+				and u.dept_id = #{deptId}
+			</if>
+		</trim>
+	</select>
+
+	<insert id="insert" parameterType="User">
+	    <![CDATA[
+		insert into cp_sys_user
+		(id,user_code,user_name,pass_word,is_sys,dept_id,update_time) values
+		(#{id,jdbcType=VARCHAR},#{userCode,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},
+		#{passWord,jdbcType=VARCHAR},#{isSys,jdbcType=VARCHAR},#{deptId,jdbcType=VARCHAR}, sysdate())
+		]]>
+	</insert>
+
+	<update id="update" parameterType="User">
+		update cp_sys_user
+		<trim prefix="set" suffixOverrides=",">
+			<if test="userName != null and userName != ''">
+				user_name = #{userName},
+			</if>
+			<if test="userCode != null and userCode != ''">
+				user_code = #{userCode},
+			</if>
+			<if test="passWord != null and passWord != ''">
+				pass_word = #{passWord},
+			</if>
+			update_time = sysdate()
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from  cp_sys_user where id=#{id}
+	</delete>
+
+	<select id="getUser" parameterType="string" resultMap="userMap" >
+		select * from cp_sys_user where user_code=#{userCode}
+	</select>
+
+	
+
+</mapper> 

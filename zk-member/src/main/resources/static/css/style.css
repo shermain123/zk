@@ -1,0 +1,84 @@
+
+@charset "utf-8";
+
+body{ 
+	FONT: 12px/1.6em "微软雅黑", Verdana, Arial, sans-serif;
+	background-color:#ffffff;
+	overflow-x:hidden; overflow-y:auto;height: 100%;
+}
+
+a:link {color: #0066CC; text-decoration: none;}     /* 未访问的链接 */
+a:visited {color: #0066CC; text-decoration: none;}  /* 已访问的链接 */
+a:hover {color: #0066CC; text-decoration:underline;} /* 当有鼠标悬停在链接上 */
+a:active {color: #0066CC; text-decoration: none;}   /* 被选择的链接 */
+
+*{margin: 0px;padding: 0px;}
+img{border:0px;}
+ul,li{list-style: none;}
+table {border-collapse: collapse;border-spacing: 0;}
+
+.display{display:block;}
+.ndisplay{display:none;}
+
+.text_align_left{text-align: left;}
+.text_align_right{text-align: right;}
+.text_align_center{text-align: center;}
+
+.text_align_left1{text-align: left !important;}
+.text_align_right1{text-align: right !important;}
+.text_align_center1{text-align: center !important;}
+
+.sperator_div{border-top:1px solid #9A9A9A;}
+
+.padding_div{padding: 5px;}
+.padding5top_div{padding-top: 5px;}
+.padding10_div{padding: 15px 10px 5px 10px;}
+.padding10trl_div{padding: 15px 10px 0px 10px;}
+.nrq{border: 1px solid #cfcfcf;}
+
+.layui-table{width: 100%;}
+.layui-table thead tr th div{text-align: center;}
+
+.layui-table td.table_left, .layui-table th.table_left{text-align: left;}
+.layui-table td.table_right, .layui-table th.table_right{text-align: right;}
+.layui-table td.table_center, .layui-table th.table_center{text-align: center;}
+.layui-table .title_color{background-color:#f8f8f8;}
+.layui-table_nowrap{white-space: nowrap;}
+
+.search_form .layui-form-item .layui-form-label{width: 110px;padding: 1px 2px;}
+.search_form .layui-form-item .layui-form-label53{width: 53px;}
+.search_form .layui-form-item .layui-form-label100{width: 100px;}
+.search_form .layui-form-item .layui-form-label90{width: 90px;}
+.search_form .layui-form-item .layui-form-label80{width: 80px;}
+.search_form .layui-form-item .layui-form-label70{width: 70px;}
+
+.search_form .layui-form-item .layui-input-inline {width: 160px;margin-right: 5px;}
+.search_form .layui-input, .search_form  .layui-select, .search_form .layui-textarea {height: 22px;}
+
+.search_form .btn_group{text-align: right;width: 273px;}
+.search_form .btn_group234{width: 234px;}
+.search_form .btn_group0{width: 0px;}
+
+table.infoview_table td.first_t, 
+table.infoview_table td.third_t { text-align: right; width: 15%;}
+table.infoview_table td.second_t, 
+table.infoview_table td.fouth_t {text-align: left;width: 35%;}
+
+.tip_form button{margin-right: 10px;}
+.tip_form .layui-form-item .layui-input-inline300{width: 300px;}
+
+.tab_ss {float: left;text-align: left;padding: /* 20px */ 10px 10px 10px; /* overflow: hidden; */}
+.tab_ss table {float: left; /* width:100%; */}
+.tab_ss table tr td {height: 35px;}
+
+.nowrap{ white-space: nowrap;}
+
+.formTable td{white-space: nowrap;}
+.formTable td.tip{width: 88px;text-align: right;}
+.formTable .input{width: 138px;}
+
+.new_table td{border-bottom: solid 1px #ccc;}
+.new_table td,.new_table th{font-size:12px;padding: 0px 5px;border-bottom: solid 1px #ccc;border-right: solid 1px #ccc;height: 33px;}
+.inner_table td,.inner_table th{border-right: none;border-bottom:none;color:#2D82FF;}
+
+

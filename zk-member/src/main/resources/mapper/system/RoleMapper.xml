@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.member.mapper.system.RoleMapper">
+
+	<resultMap id="roleMap" type="Role">
+		<id property="id" column="id" />
+		<result property="roleName" column="role_name" />
+		<result property="roleLogo" column="role_logo" />
+		<result property="description" column="description" />
+		<result property="isSys" column="is_sys" />
+		<result property="flag" column="flag" />
+		<result property="updateId" column="update_id" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<select id="searchAllRole" resultMap="roleMap">
+		select * from cp_sys_role t where t.flag = 1
+	</select>
+	<!-- orcale
+	 <select id="list" parameterType="map" resultMap="roleMap">
+		select B.* FROM
+		(select A.*, ROWNUM R FROM
+		(select * from cp_sys_role
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="roleName != null and roleName != ''">
+				role_name like '%'||#{roleName}||'%'
+			</if>
+		</trim>
+		<if test="orderby != null and orderby != ''">
+		<![CDATA[
+		     order by ${orderby} ${order}
+		 ]]>
+		</if>
+		)A		 
+		<![CDATA[
+		WHERE ROWNUM <= #{end} )B
+		WHERE R > #{start}   
+		]]>
+	</select> -->
+	
+	<!-- mysql -->
+	<select id="list" parameterType="map" resultMap="roleMap">
+		select * from cp_sys_role 
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="roleName != null and roleName != ''">
+				role_name like '%'||#{roleName}||'%'
+			</if>
+		</trim>
+		limit #{start},#{end}
+	</select>
+
+	<select id="count" parameterType="map" resultType="int">
+		select count(id) from cp_sys_role
+		<trim prefix="where" prefixOverrides="AND|OR">
+			<if test="roleName != null and roleName != ''">
+				role_name like '%'||#{roleName}||'%'
+			</if>
+		</trim>
+	</select>
+	
+	<insert id="insertRole" parameterType="UserRole">
+		insert into cp_sys_role(
+			ID,
+			ROLE_NAME,
+			DESCRIPTION,
+			UPDATE_ID,
+			UPDATE_TIME,
+			ROLE_LOGO,
+			FLAG,
+			IS_SYS
+		)value(
+			#{id},
+			#{roleName},
+			#{description},
+			#{updateId},
+			sysdate(),
+			#{roleLogo},
+			#{flag},
+			#{isSys}
+		)
+	</insert>
+	
+	<insert id="insert" parameterType="Role">
+	    <![CDATA[
+		insert into cp_sys_role
+		(id,role_name,role_logo,description,is_sys,flag,update_id,update_time) values
+		(#{id,jdbcType=VARCHAR},#{roleName,jdbcType=VARCHAR},#{roleLogo,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},'0',1, #{updateId,jdbcType=VARCHAR},sysdate())
+		]]>
+	</insert>
+
+	<update id="update" parameterType="Role">
+		update cp_sys_role
+		<trim prefix="set" suffixOverrides=",">
+			<if test="roleName != null and roleName != ''">
+				role_name = #{roleName},
+			</if>
+			<if test="flag != null">
+				flag = #{flag},
+			</if>
+			<if test="description != null and description != ''">
+				description = #{description},
+			</if>
+			<if test="updateId != null and updateId != ''">
+				update_id = #{updateId},
+			</if>
+			update_time = sysdate()
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<delete id="delete" parameterType="string">
+		delete from cp_sys_role where id=#{id}
+	</delete>
+</mapper> 
